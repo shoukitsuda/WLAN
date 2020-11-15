@@ -7,6 +7,8 @@
 
 void backtrack(double P[][NAP], int *C);
 
+void prepare_input(void);
+
 int main() {
     /* 変数定義をここに書く */
     int C[NSTA];
