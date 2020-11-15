@@ -46,12 +46,7 @@ void prepare_input(void) {
     }
   }
 }
-
-
-
-/*高速化のため, 全ての想定スループットの組を前もって計算しておく */
-
-void prepare_PreT(void) {  
+void prepare_PreT(void) {
   extern double P[NSTA][NAP];
   extern double PreT[NSTA][NAP][NSTA+1];
 
