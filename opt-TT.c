@@ -48,7 +48,6 @@ void backtrack(double P[][NAP], int *C, int next) {
         }
     }
 
-
     for (int i = 0; i < NSTA; i++) {
         for (int j = temp; j < N; j++) {
             if (throughput[i][j] < throughput[i][j + 1]) {
