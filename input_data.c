@@ -46,20 +46,21 @@ void prepare_input(void) {
     }
   }
 }
-void prepare_PreT(void) {
-  extern double P[NSTA][NAP];
-  extern double PreT[NSTA][NAP][NSTA+1];
+//void prepare_PreT(void) {
+//  extern double P[NSTA][NAP];
+//  extern double PreT[NSTA][NAP][NSTA+1];
+//
+//  int i,j,k;
+//
+//  for (i=0; i<NSTA; i++) {
+//    for (j=0; j<NAP; j++) {
+//      for (k=0; k<NSTA+1; k++) {
+//	PreT[i][j][k]=(1-P[i][j])/k;
+//      }
+//    }
+//  }
+//}
 
-  int i,j,k;
-  
-  for (i=0; i<NSTA; i++) {
-    for (j=0; j<NAP; j++) {
-      for (k=0; k<NSTA+1; k++) {
-	PreT[i][j][k]=(1-P[i][j])/k;
-      }
-    }
-  }
-}
 
 
 

@@ -7,6 +7,8 @@
 
 void backtrack(double P[][NAP], int *C, int next);
 
+int countN(double P[][NAP]);
+
 int main() {
     /* 変数定義をここに書く */
     int C[NSTA];
@@ -17,7 +19,9 @@ int main() {
 
     /* ここで、最適解を計算する関数を書き、その接続を配列Cに格納するとともに全てのSTAのスループットの和を出力 */
     /*back track*/
+    printf("a");
     backtrack(P, C, 0);
+    printf("b");
 
     printf("Connections for the throughput: \n");
     for (int i = 0; i < NSTA; i++)
@@ -26,9 +30,9 @@ int main() {
 }
 
 /*以下は関数定義など */
-
 void backtrack(double P[][NAP], int *C, int next) {
-    double N = 0;
+    printf("c");
+    double N;
     double throughput[NSTA][NAP];
 
     int temp = 0;
@@ -37,30 +41,22 @@ void backtrack(double P[][NAP], int *C, int next) {
     }
 
     for (int i = 0; i < NSTA; i++) {
-        int k;
-        while (P[i][k] == 0) {/*Nを求める*/
-            N++;
-            throughput[i][k] = (1 - P[i][k]);
-            k++;
+        N = sizeof(P[i]);
+        for (int j = temp; j < NAP; j++) {
+            throughput[i][j] = (1 - P[i][j]) / N;
         }
-        for (int k = 0; k < N; ++k) {
-            throughput[i][k] = throughput[i][k] / N;
-        }
-    }
-
-
-    for (int i = 0; i < NSTA; i++) {
-        for (int j = temp; j < N; j++) {
+        for (int j = temp; j < NAP; j++) {
             if (throughput[i][j] < throughput[i][j + 1]) {
                 C[i] = j + 1;
             } else {
-                int next = j;
-                backtrack(P, C, next);/*再帰*/
+                temp += 1;
             }
+
         }
-
+//        if (i == 1) {
+//            exit(0);
+//        } else {
+//            backtrack(P, C, temp);/*再帰*/
+//        }
     }
-
 }
-
-
