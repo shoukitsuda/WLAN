@@ -7,6 +7,8 @@
 
 void backtrack(double P[][NAP], int *C, int next);
 
+int countN(double P[][NAP]);
+
 int main() {
     /* 変数定義をここに書く */
     int C[NSTA];
@@ -25,11 +27,12 @@ int main() {
     exit(0);
 }
 
-/*以下は関数定義など */
 
+/*以下は関数定義など */
 void backtrack(double P[][NAP], int *C, int next) {
-    double N = 0;
+//    double N = 0;
     double throughput[NSTA][NAP];
+    int grossThroughput = 0;
 
     int temp = 0;
     if (next != 0) {
@@ -37,29 +40,29 @@ void backtrack(double P[][NAP], int *C, int next) {
     }
 
     for (int i = 0; i < NSTA; i++) {
-        int k;
-        while (P[i][k] == 0) {/*Nを求める*/
-            N++;
-            throughput[i][k] = (1 - P[i][k]);
-            k++;
-        }
-        for (int k = 0; k < N; ++k) {
-            throughput[i][k] = throughput[i][k] / N;
-        }
-    }
 
-    for (int i = 0; i < NSTA; i++) {
-        for (int j = temp; j < N; j++) {
+//        int j = 0;
+//        while (P[i][j] == 0) {/*Nを求める*/
+//            throughput[i][j] = (1 - P[i][j]);
+//            j++;
+//            N++;
+//        }
+//        for (int k = 0; k < NAP; k++) {
+//            throughput[i][k] = (1 - P[i][k]);
+//            N++;
+//        }
+
+        for (int j = temp; j < NAP; j++) {
+            throughput[i][j] = throughput[i][j] / NAP;
             if (throughput[i][j] < throughput[i][j + 1]) {
                 C[i] = j + 1;
-            } else {
+                grossThroughput += C[i];
+//            } else {
                 int next = j;
-                backtrack(P, C, next);/*再帰*/
+//            }
+
             }
+            backtrack(P, C, next);/*再帰*/
         }
-
     }
-
 }
-
-
