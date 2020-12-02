@@ -33,8 +33,7 @@ int main() {
 /*以下は関数定義など */
 
 void backtrack(int i, int *C) {
-    if (i == NSTA - 1) {
-        exit(0);
+    if (i == NSTA ) {
     } else {
 
         provisional = calThroughput(i, 3);
@@ -42,19 +41,13 @@ void backtrack(int i, int *C) {
         if (calThroughput(i, 0) >= provisional) {
             C[i] = 0;
             backtrack(i + 1, C);
-        }
-
-        if (calThroughput(i, 1) >= provisional) {
+        } else if (calThroughput(i, 1) >= provisional) {
             C[i] = 1;
             backtrack(i + 1, C);
-        }
-
-        if (calThroughput(i, 2) >= provisional) {
+        } else if (calThroughput(i, 2) >= provisional) {
             C[i] = 2;
             backtrack(i + 1, C);
-        }
-
-        if (calThroughput(i, 3) >= provisional) {
+        } else if (calThroughput(i, 3) >= provisional) {
             C[i] = 3;
             backtrack(i + 1, C);
         }
