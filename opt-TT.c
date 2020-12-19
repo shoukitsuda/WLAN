@@ -5,7 +5,7 @@
 
 /* いろんなプロトタイプ宣言をここに書く*/
 
-void branch(int i, int *C, double sumThroughput, double provisional);
+void branch(int i, int *C, double sumThroughput);
 
 double calThroughput(int i, int j);
 
@@ -19,7 +19,7 @@ int main() {
 
     /* ここで、最適解を計算する関数を書き、その接続を配列Cに格納するとともに全てのSTAのスループットの和を出力 */
     /*back track*/
-    branch(0, C, 0, 0);
+    branch(0, C, 0);
 
     printf("Connections for the throughput: \n");
     for (int i = 0; i < NSTA; i++)
@@ -28,38 +28,45 @@ int main() {
 }
 
 /*以下は関数定義など */
-void branch(int i, int *C, double sumThroughput, double provisional) {
+void branch(int i, int *C, double sumThroughput) {
     if (i == NSTA) {
         printf("Sum of Throughput = %lf \n", sumThroughput);
         return;
     } else {
-        provisional = calThroughput(i, 3);
+        double provisional = 0.0;
 
         if (calThroughput(i, 0) >= provisional) {
             C[i] = 0;
+            provisional = calThroughput(i, 0);
 
-        } else if (calThroughput(i, 1) >= provisional) {
+        }
+        if (calThroughput(i, 1) >= provisional) {
             C[i] = 1;
-
-        } else if (calThroughput(i, 2) >= provisional) {
+            provisional = calThroughput(i, 1);
+        }
+        if (calThroughput(i, 2) >= provisional) {
             C[i] = 2;
-
-        } else if (calThroughput(i, 3) >= provisional) {
+            provisional = calThroughput(i, 2);
+        }
+        if (calThroughput(i, 3) >= provisional) {
             C[i] = 3;
         }
+
         sumThroughput += calThroughput(i, C[i]);
-        branch(i + 1, C, sumThroughput, provisional);
+        branch(i + 1, C, sumThroughput);
     }
 }
 
 double calThroughput(int i, int j) {
-    double throughput[NSTA][NAP];
-    /*Nを計算*/
+    double throughput = 0.0;
+    double PER = P[i][j];
+    double N = 0.0;
 
-    N = sizeof(P[i]) / sizeof(double);
-    /*throughputを計算*/
-    throughput[i][j] = (1 - P[i][j]) / N;
-    return throughput[i][j];
+    for (int k = 0; k < NAP; k++) {
+        if (P[k][j] == 0) break;
+        N++;
+    }
+
+    throughput = (1 - PER) / N;
+    return throughput;
 }
-
-
